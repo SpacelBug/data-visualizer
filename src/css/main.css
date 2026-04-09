@@ -1,4 +1,60 @@
+html,
 body {
   background-color: var(--background-color);
   color: var(--font-color);
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: normal;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: normal;
+}
+
+textarea {
+  background-color: var(--panels-color);
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  appearance: none;
+  color: var(--font-color);
+}
+
+input[type='text'] {
+  background-color: var(--panels-color);
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  height: 40px;
+  appearance: none;
+  color: var(--font-color);
+}
+
+input[type='number'] {
+  background-color: var(--panels-color);
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  height: 40px;
+  appearance: none;
+  color: var(--font-color);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
 }
