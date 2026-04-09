@@ -1,9 +1,14 @@
-import { describe, it, expect } from 'vitest'
-
+import { describe, beforeEach, it, expect } from 'vitest'
+import { setActivePinia, createPinia } from 'pinia'
 import { mount } from '@vue/test-utils'
 import App from '../App.vue'
 
 describe('App', () => {
+  beforeEach(() => {
+    // Creates a fresh pinia for every test
+    setActivePinia(createPinia())
+  })
+
   it('mounts renders properly', () => {
     const wrapper = mount(App)
   })
