@@ -39,11 +39,7 @@
         >
       </div>
       <template v-if="selectedDataPanel === 'file'">
-        <FileInput v-model="file"></FileInput>
-        <FileView
-          v-model="data"
-          :file="file"
-        ></FileView>
+        <FileInput v-model="data"></FileInput>
       </template>
       <TextData
         v-else-if="selectedDataPanel === 'text'"
@@ -59,13 +55,11 @@
 <script setup>
 import { ref } from 'vue'
 import FileInput from './components/FileInput.vue'
-import FileView from './components/FileView.vue'
 import ChartParams from './components/ChartParams.vue'
 import LineChart from './components/LineChart.vue'
 import LoggerView from './components/LoggerView.vue'
 import TextData from './components/TextData.vue'
 
-const file = ref(null)
 const data = ref([])
 const params = ref({})
 
