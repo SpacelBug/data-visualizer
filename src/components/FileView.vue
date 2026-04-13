@@ -1,5 +1,13 @@
 <template>
   <div class="file-view">
+    <div class="csv-options">
+      <input
+        type="checkbox"
+        name="hasHeader"
+        v-model="hasHeader"
+      />
+      <label for="hasHeader">csv header</label>
+    </div>
     <div class="keys-view">
       <div class="caption">Data keys</div>
       <div
@@ -44,15 +52,46 @@ const props = defineProps({
 const data = defineModel()
 const keys = ref(null)
 
+const hasHeader = ref(true)
+
 watch(
   () => props.file,
   async (newFile) => {
     const reader = new FileReader()
+    console.log(newFile)
     reader.readAsText(newFile)
     reader.onload = () => {
       logger.log('INFO', 'get keys from object')
-      data.value = JSON.parse(reader.result)
-      keys.value = findAllKeys(JSON.parse(reader.result))
+      if (newFile.type === 'application/json') {
+        data.value = JSON.parse(reader.result)
+        keys.value = findAllKeys(JSON.parse(reader.result))
+      } else if (newFile.type === 'text/csv') {
+        logger.log('INFO', 'parse csv data')
+        let CSVData = []
+
+        let rowIndex = 0
+        for (const row of reader.result.split('\n')) {
+          if (hasHeader.value && rowIndex === 0) {
+            keys.value = row.split(',')
+            rowIndex++
+            continue
+          }
+
+          let object = {}
+          let valueIndex = 0
+
+          for (const value of row.split(',')) {
+            object[keys.value ? keys.value[valueIndex] : valueIndex] = value
+            valueIndex++
+          }
+
+          CSVData.push(object)
+          rowIndex++
+        }
+
+        data.value = CSVData
+        keys.value ? null : (keys.value = findAllKeys(CSVData))
+      }
     }
   },
 )
