@@ -36,6 +36,10 @@ const svgWidth = ref(0)
 const svgHeight = ref(0)
 const axisSize = 30
 
+const observer = new ResizeObserver(() => {
+  plot()
+})
+
 const hoveredLegendKey = ref(null)
 
 const props = defineProps({
@@ -102,6 +106,7 @@ const yScale = computed(() => {
 
 onMounted(() => {
   plot()
+  observer.observe(svg.value)
 })
 
 watch(props.params, () => {
