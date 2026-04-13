@@ -162,7 +162,8 @@ function plot() {
     for (const key of props.params.yKeys) {
       const line = d3
         .line()
-        .x((d, i) => xScale.value(i))
+        .defined((d) => ![null, NaN].includes(d[key]))
+        .x((d, i) => (props.params.xKey ? xScale.value(d[props.params.xKey]) : xScale.value(i)))
         .y((d) => yScale.value(d[key]))
 
       linesGroup
