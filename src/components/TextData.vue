@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const data = ref({
   key1: { values: '12,34,12,34,1,234,1,2', divider: ',' },
@@ -47,10 +47,15 @@ const data = ref({
 
 const model = defineModel()
 
+onMounted(() => {
+  parseData()
+})
+
 function onDragStart(key) {
   console.log('dragstart: ', event, key)
   event.dataTransfer.setData('text', key)
 }
+
 function parseData() {
   let arrayOfObjects = []
 
