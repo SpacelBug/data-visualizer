@@ -1,6 +1,7 @@
 <template>
   <div class="chart-params">
     <h1>Chart params</h1>
+
     <h2>Values</h2>
     <div
       class="param-box"
@@ -29,6 +30,7 @@
         </div>
       </div>
     </div>
+
     <div
       class="param-box"
       @drop="
@@ -46,12 +48,17 @@
         </select>
       </h3>
       <div class="values-box">
-        <div class="value">
+        <div
+          class="value"
+          v-if="xKey"
+          @click="xKey = null"
+        >
           <span>{{ xKey }}</span>
           <div class="cross-icon" />
         </div>
       </div>
     </div>
+
     <h2>View</h2>
     <div class="param-box">
       <span>Force Y domain</span>
