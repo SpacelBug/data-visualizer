@@ -7,7 +7,7 @@
       type="file"
       hidden
       ref="input"
-      accept=".json,.scv"
+      accept=".json,.csv"
       @change="onChange"
     />
     <div class="input-button">+</div>
