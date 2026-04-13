@@ -48,13 +48,22 @@ const props = defineProps({
 
 const xScale = computed(() => {
   if (props.params.xScaleTypes === 'linear' && svg.value) {
-    const xDataLength = props.data.length
+    logger.log('INFO', `init xScale (${props.params.xKey})`)
+    if (props.params.xKey) {
+      print('Heres: ', props.params.xKey)
+      return d3
+        .scaleLinear()
+        .domain(d3.extent(props.data.map((d) => d[props.params.xKey])))
+        .range([0, svgWidth.value - axisSize])
+    } else {
+      console.log('Heres')
+      const xDataLength = props.data.length
 
-    logger.log('INFO', 'init xScale')
-    return d3
-      .scaleLinear()
-      .domain([0, xDataLength])
-      .range([0, svgWidth.value - axisSize])
+      return d3
+        .scaleLinear()
+        .domain([0, xDataLength])
+        .range([0, svgWidth.value - axisSize])
+    }
   } else if (props.params.xScaleTypes === 'time') {
     // TODO
   } else {
