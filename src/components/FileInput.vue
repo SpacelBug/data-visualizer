@@ -16,27 +16,20 @@
       <br /><small>Supported files: .json, .scv</small>
     </span>
   </div>
-  <file-view
-    v-model="model"
-    :file="file"
-  ></file-view>
+  <file-view v-model="model"></file-view>
 </template>
 
 <script setup>
 import FileView from './FileView.vue'
-import { onMounted, ref } from 'vue'
 
-const file = ref()
-const model = defineModel({ type: [Array, null], default: null })
+import { useFileData } from '@/stores/fileData'
+
+const fileData = useFileData()
+const model = defineModel()
 
 function onChange(event) {
-  file.value = event.target.files[0]
+  fileData.setFile(event.target.files[0])
 }
-
-onMounted(() => {
-  console.log('file input mounted: ', model.value)
-  model.value = null
-})
 </script>
 
 <style scoped>

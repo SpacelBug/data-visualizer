@@ -2,7 +2,7 @@
   <div class="main-box">
     <b>Data inputs</b>
     <div
-      v-for="(dataObject, key) in data"
+      v-for="(dataObject, key) in textData.data"
       class="data"
       :key="key"
     >
@@ -40,28 +40,30 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 
-const data = ref({
-  key1: { values: '12,34,12,34,1,234,1,2', divider: ',' },
-  key2: { values: null, divider: null },
-})
+import { useTextData } from '@/stores/textData'
+
+const textData = useTextData()
 
 const model = defineModel()
 
 onMounted(() => {
+  textData.setData({
+    key1: { values: '12,34,12,34,1,234,1,2', divider: ',' },
+    key2: { values: null, divider: null },
+  })
   parseData()
 })
 
 function onDragStart(key) {
-  console.log('dragstart: ', event, key)
   event.dataTransfer.setData('text', key)
 }
 
 function parseData() {
   let arrayOfObjects = []
 
-  for (const key in data.value) {
-    if (data.value[key].divider !== null) {
-      const values = data.value[key].values.split(data.value[key].divider)
+  for (const key in textData.data) {
+    if (textData.data[key].divider !== null) {
+      const values = textData.data[key].values.split(textData.data[key].divider)
       for (const index in values) {
         arrayOfObjects[index]
           ? (arrayOfObjects[index][key] = Number(values[index]))
