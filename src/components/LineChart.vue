@@ -180,6 +180,10 @@ function plot() {
         .x((d, i) => (props.params.xKey ? xScale.value(d[props.params.xKey]) : xScale.value(i)))
         .y((d) => yScale.value(d[key]))
 
+      if (props.params.isCurve) {
+        line.curve(d3.curveMonotoneX)
+      }
+
       linesGroup
         .append('path')
         .attr('fill', 'none')

@@ -88,6 +88,7 @@
       </div>
     </div>
 
+    <h2>Extra params</h2>
     <div class="checkboxes">
       <div class="checkbox-wrapper">
         <span>Show grid</span>
@@ -108,6 +109,13 @@
         <input
           type="checkbox"
           v-model="params.hideAxises"
+        />
+      </div>
+      <div class="checkbox-wrapper">
+        <span>Curve path</span>
+        <input
+          type="checkbox"
+          v-model="params.isCurve"
         />
       </div>
     </div>
