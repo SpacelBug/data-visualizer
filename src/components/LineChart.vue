@@ -54,18 +54,29 @@ const xScale = computed(() => {
   if (props.params.xScaleTypes === 'linear' && svg.value) {
     logger.log('INFO', `init xScale (${props.params.xKey})`)
     if (props.params.xKey) {
-      print('Heres: ', props.params.xKey)
-      return d3
-        .scaleLinear()
-        .domain(d3.extent(props.data.map((d) => d[props.params.xKey])))
-        .range([0, svgWidth.value - axisSize])
-    } else {
-      console.log('Heres')
-      const xDataLength = props.data.length
+      let domain = [
+        Number.isFinite(props.params.xDomainMin)
+          ? props.params.xDomainMin
+          : d3.min(props.data.map((d) => d[props.params.xKey])),
+        Number.isFinite(props.params.xDomainMax)
+          ? props.params.xDomainMax
+          : d3.max(props.data.map((d) => d[props.params.xKey])),
+      ]
 
       return d3
         .scaleLinear()
-        .domain([0, xDataLength])
+        .domain(domain)
+        .range([0, svgWidth.value - axisSize])
+    } else {
+      const xDataLength = props.data.length
+      let domain = [
+        Number.isFinite(props.params.xDomainMin) ? props.params.xDomainMin : 0,
+        Number.isFinite(props.params.xDomainMax) ? props.params.xDomainMax : xDataLength,
+      ]
+
+      return d3
+        .scaleLinear()
+        .domain(domain)
         .range([0, svgWidth.value - axisSize])
     }
   } else if (props.params.xScaleTypes === 'time') {
@@ -164,6 +175,7 @@ function plot() {
 
       d3.select(svg.value)
         .append('g')
+        .attr('transform', `translate(${xScale.value(0)}, 0)`)
         .attr('stroke', 'white')
         .attr('stroke-width', 1)
         .attr('color', 'white')
