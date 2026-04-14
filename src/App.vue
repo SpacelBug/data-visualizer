@@ -9,8 +9,8 @@
           @click="selectedChartType = 'line'"
         />
         <div
-          :class="['chart-type', { active: selectedChartType === 'pie' }]"
-          @click="selectedChartType = 'pie'"
+          :class="['chart-type', { active: selectedChartType === 'dots' }]"
+          @click="selectedChartType = 'dots'"
         />
         <div
           :class="['chart-type', { active: selectedChartType === 'bar' }]"
@@ -18,6 +18,12 @@
         />
       </div>
       <LineChart
+        v-if="selectedChartType === 'line'"
+        :data="data"
+        :params="params"
+      />
+      <DotsChart
+        v-if="selectedChartType === 'dots'"
         :data="data"
         :params="params"
       />
@@ -57,6 +63,7 @@ import { ref } from 'vue'
 import FileInput from './components/FileInput.vue'
 import ChartParams from './components/ChartParams.vue'
 import LineChart from './components/LineChart.vue'
+import DotsChart from './components/charts/DotsChart.vue'
 import LoggerView from './components/LoggerView.vue'
 import TextData from './components/TextData.vue'
 
